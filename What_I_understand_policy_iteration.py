@@ -116,7 +116,7 @@ if __name__ == '__main__':
     # P has to be transition table of the environment
 
     # Create FrozenLake environment
-    # env = gym.make('FrozenLake-v1')
+    # env = gym.make('FrozenLake-v1', is_slippery=False)
     env = gym.make('CliffWalking-v0')
     # Set seeds for reproducible
     np.random.seed(0)
@@ -124,5 +124,8 @@ if __name__ == '__main__':
     # Get the transition table
     P = env.P
     # Get the optimal policy and Value table for the environment
-    pi, V = policy_iteration_algorithm(P, 1.0)
+    # Changing the discount value between [0, 1] inclusive.
+    # The algorithm behavior change accordingly.
+    # Discount = 1 can make algorithm run indefinitely (I guess due to exploitation infinite value)
+    pi, V = policy_iteration_algorithm(P, 0.95)
     print(V)
